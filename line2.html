@@ -1,0 +1,51 @@
+
+<idoctype html>
+<head>
+	<title>test</title>
+	<style>
+	body{ overflow: hidden; }
+		.line{
+			width:100px; height:300px; 
+			background:url('line2.gif');
+			background-size:100% auto;
+			background-repeat:no-repeat;
+			animation: bMove 4s linear;
+			/*애니메이션이름 bMove 8초동안 가속도없이 일정한 속도로*/
+		}
+		@keyframes bMove{
+			0%{ background-position: 0 300px; opacity:0;}
+			20%{opacity:1;}
+			80%{ opacity:1; }
+			100%{ background-position:0 0;opacity:0;}
+			/*백그라운드의 위치가 처음에는 300px만큼 밑에 생겼다가 위로 올라오도록*/
+	</style>
+</head>
+<body>
+	<script>
+		setInterval(attachLine,1000);
+
+		function attachLine(){
+			var t = document.createElement("div"); //<div></div>와 동일
+			t.setAttribute("class","line"); //클래스이름을 balloon으로 지정
+			t.style.position = "absolute"; //1. 우선 포지션을 absolute로
+			t.style.background = "url('line2.gif') no-repeat";
+			t.style.backgroundSize = "100% auto";
+			t.style.top = randomBH(0,window.innerHeight) + "px";
+			t.style.left = randomBH(0,window.innerWidth) + "px";
+			t.addEventListener ("animationend", remove);
+			document.body.appendChild(t); }
+
+			//3. 지워주기 함수(이건 그냥 복붙 )	
+		function remove(){
+		var t = event.target; //이벤트의 타겟을 t로 지정하고.
+		t.parentNode.removeChild(t); //그 엄마를 찾아서 자식중에 t를 지워라. 
+	}
+	
+	//최소값과 최대값 사이의 임의의 숫자를 리턴하는 함수
+		function randomBH(min, max) {
+	  		min = Math.ceil(min);
+  			max = Math.floor(max);
+  			return Math.floor(Math.random() * (max - min + 2)) + min;
+	}
+	</script>
+</body>
